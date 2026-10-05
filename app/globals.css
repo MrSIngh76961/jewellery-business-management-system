@@ -1,26 +1,247 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --c-page: #f6f4ee;
+  --c-card: #fffdf8;
+  --c-line: #e9e2d2;
+  --c-ink: #172019;
+  --c-muted: #6e756f;
+  --c-cream: #f7f3e9;
+  color-scheme: light;
 }
+
+.dark {
+  --c-page: #0e1511;
+  --c-card: #16201a;
+  --c-line: #2b3b32;
+  --c-ink: #ece6d6;
+  --c-muted: #9eaaa2;
+  --c-cream: #1f2c24;
+  color-scheme: dark;
+}
+
+/* A4 invoice paper always stays light, even in dark mode. */
+.paper {
+  --c-page: #f6f4ee;
+  --c-card: #fffdf8;
+  --c-line: #e9e2d2;
+  --c-ink: #172019;
+  --c-muted: #6e756f;
+  --c-cream: #f7f3e9;
+  color-scheme: light;
+}
+
+.dark .bg-white,
+.dark .bg-\[\#fffdf9\] { background-color: var(--c-card); }
+.dark .bg-\[\#fffdf9\]\/95 { background-color: color-mix(in srgb, var(--c-card) 95%, transparent); }
+.dark .paper.bg-white { background-color: #fff; }
+.dark .border-\[\#eee9de\],
+.dark .border-\[\#f0ebdf\],
+.dark .border-\[\#ddd6c8\] { border-color: var(--c-line); }
+.dark .bg-\[\#ece6d6\],
+.dark .bg-\[\#eee8db\],
+.dark .bg-\[\#ebe5d9\],
+.dark .bg-\[\#d5cfc0\] { background-color: var(--c-cream); }
+.dark .text-\[\#7a807a\],
+.dark .text-\[\#69716b\] { color: var(--c-muted); }
+.dark .bg-\[\#e4f2e8\] { background-color: #1d3a2b; }
+.dark .bg-\[\#fae4e2\] { background-color: #3d2220; }
+.dark .bg-\[\#fff0d1\] { background-color: #3a2f17; }
+.dark .text-\[\#34704b\],
+.dark .text-\[\#3d805d\],
+.dark .text-\[\#3f7658\] { color: #7fcba0; }
+.dark .text-\[\#a54440\] { color: #f0948e; }
+.dark .text-\[\#9a6b16\] { color: #e4bf68; }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-gold: #c99a2e;
+  --color-gold-2: #e4bf68;
+  --color-gold-deep: #a9822c;
+  --color-ink: var(--c-ink);
+  --color-muted: var(--c-muted);
+  --color-cream: var(--c-cream);
+  --color-page: var(--c-page);
+  --color-card: var(--c-card);
+  --color-line: var(--c-line);
+  --color-brand: #244d3a;
+  --color-forest: #17352a;
+  --color-forest-2: #285440;
+  --color-forest-3: #214534;
+  --color-danger: #b34b45;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --shadow-card: 0 12px 35px rgba(35, 42, 34, 0.08);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+
+
+body {
+  background: var(--c-page);
+  color: var(--c-ink);
+  font-family: var(--font-sans);
+}
+
+.landing-glow-card {
+  position: relative;
+  isolation: isolate;
+  border-color: rgba(169, 130, 44, 0.28);
+  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.38), transparent 58%, rgba(211, 166, 75, 0.08));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78), 0 8px 24px rgba(18, 62, 50, 0.045), 0 0 12px rgba(201, 154, 46, 0.055);
+  transition: border-color 280ms ease, box-shadow 280ms ease, filter 280ms ease;
+}
+
+.landing-glow-card--green {
+  background-color: #e3ede3;
+}
+
+.landing-glow-card--gold {
+  background-color: #f1e4c3;
+}
+
+.landing-glow-card--green:hover {
+  background-color: #dce9dc;
+}
+
+.landing-glow-card--gold:hover {
+  background-color: #ebd9aa;
+}
+
+.landing-glow-card::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(130deg, rgba(228, 191, 104, 0.68), rgba(255, 255, 255, 0.12) 36%, rgba(52, 112, 75, 0.22) 68%, rgba(201, 154, 46, 0.52));
+  content: "";
+  pointer-events: none;
+  opacity: 0.34;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  transition: opacity 280ms ease;
+}
+
+.landing-glow-card:hover {
+  border-color: rgba(169, 130, 44, 0.58);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94), 0 18px 38px rgba(18, 62, 50, 0.105), 0 0 24px rgba(201, 154, 46, 0.16);
+  filter: drop-shadow(0 0 5px rgba(201, 154, 46, 0.1));
+}
+
+.landing-glow-card:hover::before {
+  opacity: 0.9;
+}
+
+.landing-page a,
+.landing-page button {
+  transition-property: color, background-color, border-color, box-shadow, filter, transform, text-shadow;
+  transition-duration: 220ms;
+  transition-timing-function: ease;
+}
+
+.landing-page a:hover {
+  filter: brightness(1.12);
+  text-shadow: 0 0 12px rgba(228, 191, 104, 0.24);
+}
+
+.landing-page button:not(:disabled):hover {
+  filter: brightness(1.07) drop-shadow(0 3px 8px rgba(201, 154, 46, 0.2));
+}
+
+.landing-page a:focus-visible,
+.landing-page button:focus-visible {
+  outline: 2px solid #d3a64b;
+  outline-offset: 3px;
+}
+
+.landing-preview-nav-item {
+  cursor: default;
+  transition: background-color 180ms ease, color 180ms ease, padding-left 180ms ease;
+}
+
+.landing-preview-nav-item:hover {
+  padding-left: 0.7rem;
+  background-color: rgba(228, 191, 104, 0.16);
+  color: #efd07b;
+}
+
+.landing-preview-item {
+  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.landing-preview-item:hover {
+  transform: translateY(-2px);
+  border-color: rgba(169, 130, 44, 0.48);
+  box-shadow: 0 6px 16px rgba(18, 62, 50, 0.1);
+}
+
+.landing-feature-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border: 1px solid rgba(52, 112, 75, 0.16);
+  border-radius: 9999px;
+  background: rgba(227, 237, 227, 0.78);
+  padding: 0.375rem 0.625rem;
+  transition: transform 200ms ease, border-color 200ms ease, background-color 200ms ease, box-shadow 200ms ease, color 200ms ease;
+}
+
+.landing-feature-pill > svg {
+  flex: none;
+  transition: transform 200ms ease, filter 200ms ease;
+}
+
+.landing-feature-pill:hover {
+  transform: translateY(-2px);
+  border-color: rgba(169, 130, 44, 0.62);
+  background: #f1e4c3;
+  box-shadow: 0 5px 15px rgba(18, 62, 50, 0.1), 0 0 12px rgba(201, 154, 46, 0.16);
+  color: #17352a;
+}
+
+.landing-feature-pill:hover > svg {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 4px rgba(201, 154, 46, 0.48));
+}
+
+.landing-feature-pill--dark {
+  border-color: rgba(239, 208, 123, 0.18);
+  background: rgba(255, 255, 255, 0.055);
+  color: #d6e0d9;
+}
+
+.landing-feature-pill--dark:hover {
+  border-color: rgba(239, 208, 123, 0.68);
+  background: rgba(239, 208, 123, 0.13);
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.14), 0 0 14px rgba(239, 208, 123, 0.12);
+  color: #fff5d5;
+}
+
+::selection {
+  background: rgba(201, 154, 46, 0.3);
+}
+
+@media (max-width: 767px) {
+  .admin-content-shell {
+    margin-left: 0 !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
 }
